@@ -8,7 +8,9 @@
 [![Linkedin](https://img.shields.io/badge/-LinkedIn-black.svg?logo=linkedin&color=rgba(235%2068%2050)&style=for-the-badge)](https://linkedin.com/in/takielias)
 
 ### This package provides an easy solution for implementing jQuery AJAX calls and managing responses in Laravel
-applications. For an enhanced user experience, it is highly recommended to integrate this package with the [Laravel Tablar](https://github.com/takielias/tablar) admin dashboard.
+
+applications. For an enhanced user experience, it is highly recommended to integrate this package with
+the [Laravel Tablar](https://github.com/takielias/tablar) admin dashboard.
 
 ## Installation
 
@@ -24,17 +26,44 @@ Now `npm run dev`
 
 ## Usage
 
-Insert `@alert` where you want the alert messages to appear in your Blade file.
+Insert `@alert` where you want the alert messages to appear in your Blade file. And put your form submit button
+as `@submit`
+
+## Example
+
+```php
+<form class="card" action="{{route('product.save')}}" method="post">
+    <div class="card-header">
+        <h3 class="card-title">Slip form</h3>
+    </div>
+    <div class="card-body">
+        @alert
+        
+      ...............
+      ...............
+      
+    </div>
+    <div class="card-footer text-end">
+        @submit
+    </div>
+</form>
+
+```
 
 ## Controller
 
 ```php
-return Lab::setData(['success' => true])
-    ->enableScrollToTop()
-    ->setRedirect(route('product.index'))
-    ->setSuccess('Product Created Successfully!')
-    ->setStatus(201)
-    ->toJsonResponse();
+    function store(SaveProductRequest $saveProductRequest)
+    {
+        $validated = $saveProductRequest->validated();
+        Product::create($validated);
+        return Lab::setData(['success' => true])
+            ->enableScrollToTop()
+            ->setRedirect(route('product.index'))
+            ->setSuccess('Product Created Successfully')
+            ->setStatus(201)
+            ->toJsonResponse();
+    }
 ```
 
 ## Request
@@ -42,29 +71,59 @@ return Lab::setData(['success' => true])
 For request validation
 
 ```php
-protected function failedValidation($validator)
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Takielias\Lab\Facades\Lab;
+
+class SaveProductRequest extends FormRequest
 {
-    // Throw the HttpResponseException with the custom response
-    throw new HttpResponseException(Lab::setStatus(422)
-        ->enableScrollToTop()
-        ->setValidationError($validator)->toJsonResponse());
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
+     */
+    public function rules(): array
+    {
+        return [
+            'price' => ['required', 'gt:0'],
+            'name' => ['required']
+        ];
+    }
+
+    protected function failedValidation($validator)
+    {
+        // Throw the HttpResponseException with the custom response
+        throw new HttpResponseException(Lab::setStatus(422)
+            ->enableScrollToTop()
+            ->setValidationError($validator)->toJsonResponse());
+    }
 }
+
 ```
 
 ## Ajax Call
 
 ```js
-    const selectedDateData = {
-    appointment_date: dateStr
+    const productData = {
+    product_name: 'Product Name'
 };
-const getUrl = '{{route('
-available.slot.time
+const postUrl = '{{route('
+product.save
 ')}}';
-ajaxGet(getUrl, selectedDateData, function (response) {
+ajaxPost(postUrl, productData, function (response) {
     console.log(response.data)
-    if (response.data.success) {
-        $('#appointment-time').html(response.view)
-    }
 }, function (error) {
 
 }, function (data) {
