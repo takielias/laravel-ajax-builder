@@ -26,10 +26,26 @@ class LabServiceProvider extends ServiceProvider
         }
 
         $this->loadViewsFrom(__DIR__ . '/../resources/views/alert', 'lab-alert');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views/button', 'lab-button');
 
         // Register a new custom directive called @alert
         Blade::directive('alert', function ($expression) {
             return "<?php echo view('lab-alert::alert')->render(); ?>";
+        });
+
+        Blade::directive('submit', function ($expression) {
+            $defaultTitle = 'Submit';
+            $defaultClass = 'btn btn-primary ajax-submit-button has-spinner';
+            $title = $defaultTitle;
+            $class = $defaultClass;
+            // Stricter check for non-empty expression
+            if (isset($expression) && trim($expression) !== '') {
+                $parts = explode(',', $expression);
+                $title = trim(array_shift($parts) ?: $defaultTitle); // Get first item, trim, default to $defaultTitle
+                $class = trim(implode(' ', $parts) ?: '') ? trim(implode(' ', $parts)) . ' ' . $defaultClass : $defaultClass; // Combine remaining, trim, append default class (if not empty)
+            }
+            // Consider using Blade components or view composition for reusable button rendering
+            return '<button type="submit" class="' . $class . '">' . $title . '</button>';
         });
 
     }
