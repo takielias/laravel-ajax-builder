@@ -1,11 +1,13 @@
 # Laravel Ajax Builder
 
-[![Latest Version on Packagist][ico-version]][link-packagist]
-[![Total Downloads][ico-downloads]][link-downloads]
-[![Build Status][ico-travis]][link-travis]
-[![StyleCI][ico-styleci]][link-styleci]
+[![Latest Version](https://img.shields.io/packagist/v/takielias/lab?color=blue&label=release&style=for-the-badge)](https://packagist.org/packages/takielias/lab)
+[![Stars](https://img.shields.io/github/stars/takielias/lab?color=rgb%2806%20189%20248%29&label=stars&style=for-the-badge)](https://packagist.org/packages/takielias/lab)
+[![Total Downloads](https://img.shields.io/packagist/dt/takielias/lab.svg?color=rgb%28249%20115%2022%29&style=for-the-badge)](https://packagist.org/packages/takielias/lab)
+[![Forks](https://img.shields.io/github/forks/takielias/lab?color=rgb%28134%20115%2022%29&style=for-the-badge)](https://packagist.org/packages/takielias/lab)
+[![Issues](https://img.shields.io/github/issues/takielias/lab?color=rgb%28134%20239%20128%29&style=for-the-badge)](https://packagist.org/packages/takielias/lab)
+[![Linkedin](https://img.shields.io/badge/-LinkedIn-black.svg?logo=linkedin&color=rgba(235%2068%2050)&style=for-the-badge)](https://linkedin.com/in/takielias)
 
-This is where your description should go. Take a look at [contributing.md](contributing.md) to see a to do list.
+A simpel Laravel package for easy jQuery AJAX calls and response setup.
 
 ## Installation
 
@@ -16,6 +18,51 @@ composer require takielias/lab
 ```
 
 ## Usage
+
+Add `@alert` in your Blade file.
+
+## Controller
+```php
+return Lab::setData(['success' => true])
+    ->enableScrollToTop()
+    ->setRedirect(route('slip.index'))
+    ->setSuccess('Slip Created Successfully')
+    ->setStatus(201)
+    ->toJsonResponse();
+```
+
+## Request
+For request validation
+```php
+protected function failedValidation($validator)
+{
+    // Throw the HttpResponseException with the custom response
+    throw new HttpResponseException(Lab::setStatus(422)
+        ->enableScrollToTop()
+        ->setValidationError($validator)->toJsonResponse());
+}
+```
+
+## Ajax Call
+
+```js
+    const selectedDateData = {
+        appointment_date: dateStr
+    };
+    const getUrl = '{{route('available.slot.time')}}';
+    ajaxGet(getUrl, selectedDateData, function (response) {
+        console.log(response.data)
+        if (response.data.success) {
+            $('#appointment-time').html(response.view)
+        }
+    }, function (error) {
+
+    }, function (data) {
+
+    })
+```
+
+There are also some built in Method ajaxGet, ajaxPost, ajaxPut & ajaxPatch
 
 ## Change log
 
@@ -44,14 +91,14 @@ If you discover any security related issues, please email author@email.com inste
 
 MIT. Please see the [license file](license.md) for more information.
 
-[ico-version]: https://img.shields.io/packagist/v/takielias/laravel-ajax-builder.svg?style=flat-square
-[ico-downloads]: https://img.shields.io/packagist/dt/takielias/laravel-ajax-builder.svg?style=flat-square
-[ico-travis]: https://img.shields.io/travis/takielias/laravel-ajax-builder/master.svg?style=flat-square
+[ico-version]: https://img.shields.io/packagist/v/takielias/lab.svg?style=flat-square
+[ico-downloads]: https://img.shields.io/packagist/dt/takielias/lab.svg?style=flat-square
+[ico-travis]: https://img.shields.io/travis/takielias/lab/master.svg?style=flat-square
 [ico-styleci]: https://styleci.io/repos/12345678/shield
 
-[link-packagist]: https://packagist.org/packages/takielias/laravel-ajax-builder
-[link-downloads]: https://packagist.org/packages/takielias/laravel-ajax-builder
-[link-travis]: https://travis-ci.org/takielias/laravel-ajax-builder
+[link-packagist]: https://packagist.org/packages/takielias/lab
+[link-downloads]: https://packagist.org/packages/takielias/lab
+[link-travis]: https://travis-ci.org/takielias/lab
 [link-styleci]: https://styleci.io/repos/12345678
 [link-author]: https://github.com/takielias
 [link-contributors]: ../../contributors
