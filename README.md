@@ -118,17 +118,17 @@ class SaveProductRequest extends FormRequest
 ```js
     const productData = {
     product_name: 'Product Name'
-};
-const postUrl = '{{route('
-product.save
-')}}';
-ajaxPost(postUrl, productData, function (response) {
-    console.log(response.data)
-}, function (error) {
-
-}, function (data) {
-
-})
+    };
+    const postUrl = '{{route('
+    product.save
+    ')}}';
+    ajaxPost(postUrl, productData, function (response) {
+        console.log(response.data)
+    }, function (error) {
+    
+    }, function (data) {
+    
+    })
 ```
 
 There are also some built in Method ajaxGet, ajaxPost, ajaxPut & ajaxPatch
