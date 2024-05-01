@@ -9,7 +9,7 @@
             "homepage": "https://ebuz.xyz"
         }
     ],
-    "homepage": "#",
+    "homepage": "https://github.com/takielias/laravel-ajax-builder",
     "keywords": [
         "Laravel",
         "AjaxBuilder"
