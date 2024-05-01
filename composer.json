@@ -1,0 +1,45 @@
+{
+    "name": "takielias/lab",
+    "description": "The Laravel Ajax Builder is a Laravel package for easily creating AJAX JSON responses. It allows setting status codes, messages, views, data, alerts, and redirect URLs through a fluent interface, streamlining the process of sending AJAX responses in Laravel applications.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Laravel Ajax Builder",
+            "email": "taki.elias@email.com",
+            "homepage": "https://ebuz.xyz"
+        }
+    ],
+    "homepage": "#",
+    "keywords": [
+        "Laravel",
+        "AjaxBuilder"
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "illuminate/support": "~10|~11"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~9.0",
+        "orchestra/testbench": "~8"
+    },
+    "autoload": {
+        "psr-4": {
+            "Takielias\\Lab\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Takielias\\Lab\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Takielias\\Lab\\LabServiceProvider"
+            ],
+            "aliases": {
+                "Lab": "Takielias\\Lab\\Facades\\Lab"
+            }
+        }
+    }
+}
