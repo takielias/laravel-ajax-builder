@@ -1,16 +1,15 @@
 # Laravel Ajax Builder
 
 [![Latest Version](https://img.shields.io/packagist/v/takielias/lab?color=blue&label=release&style=for-the-badge)](https://packagist.org/packages/takielias/lab)
-[![Stars](https://img.shields.io/github/stars/takielias/lab?color=rgb%2806%20189%20248%29&label=stars&style=for-the-badge)](https://packagist.org/packages/takielias/lab)
+[![Stars](https://img.shields.io/github/stars/takielias/laravel-ajax-builder?color=rgb%2806%20189%20248%29&label=stars&style=for-the-badge)](https://packagist.org/packages/takielias/lab)
 [![Total Downloads](https://img.shields.io/packagist/dt/takielias/lab.svg?color=rgb%28249%20115%2022%29&style=for-the-badge)](https://packagist.org/packages/takielias/lab)
-[![Forks](https://img.shields.io/github/forks/takielias/lab?color=rgb%28134%20115%2022%29&style=for-the-badge)](https://packagist.org/packages/takielias/lab)
-[![Issues](https://img.shields.io/github/issues/takielias/lab?color=rgb%28134%20239%20128%29&style=for-the-badge)](https://packagist.org/packages/takielias/lab)
+[![Forks](https://img.shields.io/github/forks/takielias/laravel-ajax-builder?color=rgb%28134%20115%2022%29&style=for-the-badge)](https://packagist.org/packages/takielias/lab)
+[![Issues](https://img.shields.io/github/issues/takielias/laravel-ajax-builder?color=rgb%28134%20239%20128%29&style=for-the-badge)](https://packagist.org/packages/takielias/lab)
 [![Linkedin](https://img.shields.io/badge/-LinkedIn-black.svg?logo=linkedin&color=rgba(235%2068%2050)&style=for-the-badge)](https://linkedin.com/in/takielias)
 
-### This package provides an easy solution for implementing jQuery AJAX calls and managing responses in Laravel
+### This package provides an easy solution for implementing jQuery AJAX calls and managing responses in Laravel applications. 
 
-applications. For an enhanced user experience, it is highly recommended to integrate this package with
-the [Laravel Tablar](https://github.com/takielias/tablar) admin dashboard.
+For an enhanced user experience, it is highly recommended to integrate this package with the [Laravel Tablar](https://github.com/takielias/tablar) admin dashboard.
 
 ## Installation
 
