@@ -38,11 +38,12 @@ window.ajaxRequest = function (url, data = {}, successCallback, errorCallback, c
             }
 
             if (response.data && response.redirect) {
-                // Redirect after a delay (2 or 3 seconds)
+                // Redirect after a delay (customize the delay as needed)
+                let delay = response.redirect_delay ?? 1500; // Default to 2000ms if not provided
                 setTimeout(function () {
                     // Use window.location.href for redirection
                     window.location.href = response.redirect;
-                }, 1000); // Delay in milliseconds (2000ms = 2s, change to 3000 for 3s)
+                }, delay);
             }
         },
         error: function (error) {

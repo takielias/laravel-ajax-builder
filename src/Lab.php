@@ -15,6 +15,7 @@ class Lab
     {
         $this->responseData['fade_out'] = true;
         $this->responseData['fade_out_time'] = 3000;
+        $this->responseData['redirect_delay'] = 1500;
         $this->responseData['scroll_to_top'] = false;
         return $this;
     }
@@ -92,6 +93,12 @@ class Lab
     public function setFadeOutTime(int $time_out): static
     {
         $this->responseData['fade_out_time'] = $time_out;
+        return $this;
+    }
+
+    public function setRedirectDelay(int $delay): static
+    {
+        $this->responseData['redirect_delay'] = $delay;
         return $this;
     }
 
