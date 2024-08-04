@@ -32,7 +32,8 @@ window.ajaxRequest = function (url, data = {}, successCallback, errorCallback, c
             if (response.data && response.alert) {
                 $("#alert").html(response.alert);
                 if (response.fade_out) {
-                    window.fadeOutAndClear('alert', 3000);
+                    let timeOut = parseInt(response.fade_out_time ?? 3000, 10);
+                    window.fadeOutAndClear('alert', timeOut);
                 }
             }
 

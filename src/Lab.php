@@ -10,9 +10,11 @@ class Lab
     protected array $responseData = [];
     protected int $status = 200;
     protected mixed $iconClass = null;
+
     public function __construct()
     {
         $this->responseData['fade_out'] = true;
+        $this->responseData['fade_out_time'] = 3000;
         $this->responseData['scroll_to_top'] = false;
         return $this;
     }
@@ -84,6 +86,12 @@ class Lab
     public function enableScrollToTop(): static
     {
         $this->responseData['scroll_to_top'] = true;
+        return $this;
+    }
+
+    public function setFadeOutTime(int $time_out): static
+    {
+        $this->responseData['fade_out_time'] = $time_out;
         return $this;
     }
 
