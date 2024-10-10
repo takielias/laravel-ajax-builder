@@ -25,11 +25,15 @@ window.ajaxRequest = function (url, data = {}, successCallback, errorCallback, c
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (response) {
+            // Clear previous error states
+            $('form .is-invalid').removeClass('is-invalid');
+            $('form .invalid-feedback').empty();
+
             if (successCallback && typeof successCallback === 'function') {
                 successCallback(response);
             }
             console.log(response);
-            if (response.data && response.alert) {
+            if (response.alert) {
                 $("#alert").html(response.alert);
                 if (response.fade_out) {
                     let timeOut = parseInt(response.fade_out_time ?? 3000, 10);
@@ -37,42 +41,50 @@ window.ajaxRequest = function (url, data = {}, successCallback, errorCallback, c
                 }
             }
 
-            if (response.data && response.redirect) {
-                // Redirect after a delay (customize the delay as needed)
-                let delay = response.redirect_delay ?? 1500; // Default to 2000ms if not provided
+            if (response.redirect) {
+                let delay = response.redirect_delay ?? 1500;
                 setTimeout(function () {
-                    // Use window.location.href for redirection
                     window.location.href = response.redirect;
                 }, delay);
             }
         },
         error: function (error) {
-            let response;
-            if (error && error.responseJSON) {
-                response = error.responseJSON;
+            // Clear previous error states
+            $('form .is-invalid').removeClass('is-invalid');
+            $('form .invalid-feedback').empty();
+
+            let response = error.responseJSON;
+            console.log(response);
+            if (response && response.data && response.data.errors && response.individual_validation_error) {
+                Object.keys(response.data.errors).forEach(function (field) {
+                    let inputField = $(`[name="${field}"]`);
+                    inputField.addClass('is-invalid');
+                    let errorMessage = response.data.errors[field][0]; // Get the first error message
+                    inputField.closest('div').find('.invalid-feedback').html(errorMessage);
+                });
+                // Display the general error message at the top if provided
+                if (response.message && !response.top_validation_error) {
+                    $("#alert").html(`<div class="alert alert-danger alert-dismissible" role="alert">${response.message}</div>`);
+                }
+            }
+
+            if (error && error.responseJSON && response.top_validation_error) {
                 if (response.alert) {
                     $("#alert").html(response.alert);
                 }
-            } else {
-                console.error('An error occurred:', error);
             }
-            if (response.fade_out) {
-                window.fadeOutAndClear('alert', 2000);
-            }
-            // Call the errorCallback after handling the error
+
             if (errorCallback && typeof errorCallback === 'function') {
                 errorCallback(error);
             }
+
+            // Scroll to top if specified
+            if (response.scroll_to_top) {
+                window.scrollTo(0, 0);
+            }
         },
         complete: function (data) {
-            let response;
             $(this).buttonLoader('stop');
-            if (data && data.responseJSON) {
-                response = data.responseJSON;
-                if (response.scroll_to_top) {
-                    window.scrollTo(0, 0);
-                }
-            }
             if (completeCallback && typeof completeCallback === 'function') {
                 completeCallback();
             }
@@ -80,8 +92,8 @@ window.ajaxRequest = function (url, data = {}, successCallback, errorCallback, c
     };
 
     if (method !== 'GET' && data instanceof FormData) {
-        settings.processData = false; // don't process the data
-        settings.contentType = false; // set content type to false as jQuery will tell the server it's a query string request
+        settings.processData = false;
+        settings.contentType = false;
     }
 
     $.ajax(settings);

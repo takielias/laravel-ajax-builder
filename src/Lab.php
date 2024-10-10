@@ -24,12 +24,26 @@ class Lab
         $this->responseData['fade_out_time'] = 3000;
         $this->responseData['redirect_delay'] = 1500;
         $this->responseData['scroll_to_top'] = false;
+        $this->responseData['top_validation_error'] = false;
+        $this->responseData['individual_validation_error'] = true;
         return $this;
     }
 
     public function setStatus(int $status): static
     {
         $this->status = $status;
+        return $this;
+    }
+
+    public function enableTopValidationError(): static
+    {
+        $this->responseData['top_validation_error'] = true;
+        return $this;
+    }
+
+    public function disableIndividualValidationError(): static
+    {
+        $this->responseData['individual_validation_error'] = false;
         return $this;
     }
 

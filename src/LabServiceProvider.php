@@ -33,6 +33,10 @@ class LabServiceProvider extends ServiceProvider
             return "<?php echo view('lab-alert::alert')->render(); ?>";
         });
 
+        Blade::directive('invalid', function ($expression) {
+            return "<?php echo view('lab-alert::invalid-label')->render(); ?>";
+        });
+
         Blade::directive('submit', function ($expression) {
             $defaultTitle = 'Submit';
             $defaultClass = 'btn btn-primary ajax-submit-button has-spinner';
