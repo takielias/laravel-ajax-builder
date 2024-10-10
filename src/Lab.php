@@ -3,13 +3,20 @@
 namespace Takielias\Lab;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\View\View;
+use Takielias\Lab\Enums\AlertType;
 
 class Lab
 {
     // Build ajax response
     protected array $responseData = [];
     protected int $status = 200;
+    protected string $message = '';
+    protected string $viewPath = '';
+    protected ?View $view = null;
+    protected ?View $alert = null;
     protected mixed $iconClass = null;
+    protected array $viewData = [];
 
     public function __construct()
     {
@@ -20,25 +27,60 @@ class Lab
         return $this;
     }
 
-    public function setStatus($status): static
+    public function setStatus(int $status): static
     {
         $this->status = $status;
         return $this;
     }
 
-    public function setMessage($message): static
+    public function setViewPath(string $path): static
     {
-        if ($message) {
+        $this->viewPath = $path;
+        return $this;
+    }
+
+    public function getViewPath(): ?string
+    {
+        return $this->viewPath;
+    }
+
+    public function setViewData(array $data): static
+    {
+        $this->viewData = array_merge($this->viewData, $data);
+        return $this;
+    }
+
+    public function getViewData(): ?array
+    {
+        return $this->viewData;
+    }
+
+    public function setMessage(?string $message): static
+    {
+        $this->message = $message;
+        if ($message !== null) {
             $this->responseData['message'] = $message;
+            $this->setViewData(['message' => $message]);
         }
         return $this;
+    }
+
+    public function getMessage(): ?string
+    {
+        return $this->message;
     }
 
     public function setView($view): static
     {
         if ($view) {
-            $this->responseData['view'] = $view->render();
+            $this->view = $view;
         }
+        return $this;
+    }
+
+    public function renderView(): static
+    {
+        $this->responseData['view'] = view($this->getViewPath(), $this->getViewData())->render();
         return $this;
     }
 
@@ -57,8 +99,20 @@ class Lab
     public function setAlert($alert): static
     {
         if ($alert) {
-            $this->responseData['alert'] = $alert->render();
+            $this->alert = $alert;
         }
+        return $this;
+    }
+
+    public function renderAlert(): static
+    {
+        $this->responseData['alert'] = view($this->getViewPath(), $this->getViewData())->render();
+        return $this;
+    }
+
+    public function setAlertView($type): static
+    {
+        $this->setViewPath('lab-alert::' . $type);
         return $this;
     }
 
@@ -66,8 +120,14 @@ class Lab
     {
         if ($iconClass) {
             $this->iconClass = $iconClass;
+            $this->setViewData(['icon' => $this->getIcon()]);
         }
         return $this;
+    }
+
+    public function getIcon()
+    {
+        return $this->iconClass;
     }
 
     public function setRedirect($redirect): static
@@ -102,58 +162,65 @@ class Lab
         return $this;
     }
 
-    public function setSuccess($message = "Success !!!"): static
-    {
-        $icon = 'ti ti-check';
-        $alert = view('lab-alert::success', ['message' => $message, 'icon' => $this->iconClass ?? $icon]);
-        if ($alert) {
-            $this->responseData['alert'] = $alert->render();
-        }
-        return $this;
-    }
-
     public function setInfo($message = "Info !!!"): static
     {
         $icon = 'ti ti-info-circle';
-        $alert = view('lab-alert::info', ['message' => $message, 'icon' => $this->iconClass ?? $icon]);
-        if ($alert) {
-            $this->responseData['alert'] = $alert->render();
-        }
+        $this->setIconClass($icon);
+        $this->setMessage($message);
+        $this->setAlertView(AlertType::info->value);
+        return $this;
+    }
+
+    public function setSuccess($message = "Success !!!"): static
+    {
+        $icon = 'ti ti-check';
+        $this->setIconClass($icon);
+        $this->setMessage($message);
+        $this->setAlertView(AlertType::success->value);
         return $this;
     }
 
     public function setWarning($message = "Warning !!!"): static
     {
         $icon = 'ti ti-exclamation-circle';
-        $alert = view('lab-alert::warning', ['message' => $message, 'icon' => $this->iconClass ?? $icon]);
-        if ($alert) {
-            $this->responseData['alert'] = $alert->render();
-        }
+        $this->setIconClass($icon);
+        $this->setMessage($message);
+        $this->setAlertView(AlertType::warning->value);
         return $this;
     }
 
     public function setDanger($message = "Danger !!!"): static
     {
         $icon = 'ti ti-alert-triangle';
-        $alert = view('lab-alert::danger', ['message' => $message, 'icon' => $this->iconClass ?? $icon]);
-        if ($alert) {
-            $this->responseData['alert'] = $alert->render();
-        }
+        $this->setIconClass($icon);
+        $this->setMessage($message);
+        $this->setAlertView(AlertType::danger->value);
+        return $this;
+    }
+
+    public function setValidationAlertView($validator): static
+    {
+        $icon = 'ti ti-alert-triangle';
+        $this->setIconClass($icon);
+        $this->setViewPath('lab-alert::' . AlertType::validationError->value);
+        $this->setViewData(['errors' => $validator->errors()]);
         return $this;
     }
 
     public function setValidationError($validator): static
     {
         $icon = 'ti ti-alert-triangle';
-        $alert = view('lab-alert::validation-error', ['errors' => $validator->errors(), 'icon' => $this->iconClass ?? $icon]);
+        $this->setIconClass($icon);
+        $this->setValidationAlertView($validator);
         $this->setMessage('Validation Error.')
-            ->setData(['errors' => $validator->errors()->messages()])
-            ->setAlert($alert);
+            ->setData(['errors' => $validator->errors()->messages()]);
         return $this;
     }
 
     public function toJsonResponse(): JsonResponse
     {
+        $this->renderView();
+        $this->renderAlert();
         return response()->json($this->responseData, $this->status);
     }
 }
