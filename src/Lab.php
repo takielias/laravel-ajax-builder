@@ -22,7 +22,7 @@ class Lab
     {
         $this->responseData['fade_out'] = true;
         $this->responseData['fade_out_time'] = 3000;
-        $this->responseData['redirect_delay'] = 1500;
+        $this->responseData['redirect_delay'] = config('lab.redirect_delay', 1500);
         $this->responseData['scroll_to_top'] = false;
         $this->responseData['top_validation_error'] = false;
         $this->responseData['individual_validation_error'] = true;
