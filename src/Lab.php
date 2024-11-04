@@ -21,7 +21,7 @@ class Lab
     public function __construct()
     {
         $this->responseData['fade_out'] = true;
-        $this->responseData['fade_out_time'] = 3000;
+        $this->responseData['fade_out_time'] = config('lab.fade_out_time', '3000');
         $this->responseData['redirect_delay'] = config('lab.redirect_delay', 1500);
         $this->responseData['scroll_to_top'] = false;
         $this->responseData['top_validation_error'] = false;
