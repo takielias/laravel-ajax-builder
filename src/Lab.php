@@ -26,6 +26,7 @@ class Lab
         $this->responseData['scroll_to_top'] = false;
         $this->responseData['top_validation_error'] = false;
         $this->responseData['individual_validation_error'] = true;
+        $this->responseData['submit_button_label'] = null;
         return $this;
     }
 
@@ -50,6 +51,12 @@ class Lab
     public function setViewPath(string $path): static
     {
         $this->viewPath = $path;
+        return $this;
+    }
+
+    public function setSubmitButtonLabel(string $label): static
+    {
+        $this->responseData['submit_button_label'] = $label;
         return $this;
     }
 

@@ -176,6 +176,9 @@ $(document).delegate(".ajax-submit-button", "click", function (event) {
 
     executeAjaxCall(requestMethod, $(form).attr('action'), formData, function (data) {
         console.log('Received data:', data);
+        if (data.submit_button_label !== null) {
+            btn.text(data.submit_button_label)
+        }
         // resetForm()
     }, function (error) {
         console.error('An unexpected error occurred:', error);
