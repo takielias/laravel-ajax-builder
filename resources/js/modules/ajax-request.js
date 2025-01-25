@@ -78,6 +78,11 @@ window.ajaxRequest = function (url, data = {}, successCallback, errorCallback, c
                 errorCallback(error);
             }
 
+            if (response.fade_out) {
+                let timeOut = parseInt(response.fade_out_time ?? 3000, 10);
+                window.fadeOutAndClear('alert', timeOut);
+            }
+
             // Scroll to top if specified
             if (response.scroll_to_top) {
                 window.scrollTo(0, 0);
