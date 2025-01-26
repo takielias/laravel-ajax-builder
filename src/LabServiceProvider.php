@@ -5,6 +5,7 @@ namespace Takielias\Lab;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Takielias\Lab\Commands\InstallLAB;
+use Takielias\Lab\View\Components\Submit;
 
 class LabServiceProvider extends ServiceProvider
 {
@@ -25,6 +26,7 @@ class LabServiceProvider extends ServiceProvider
             $this->bootForConsole();
         }
 
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'lab');
         $this->loadViewsFrom(__DIR__ . '/../resources/views/alert', 'lab-alert');
         $this->loadViewsFrom(__DIR__ . '/../resources/views/button', 'lab-button');
 
@@ -52,6 +54,9 @@ class LabServiceProvider extends ServiceProvider
             return '<button type="submit" class="' . $class . '">' . $title . '</button>';
         });
 
+        $this->loadViewComponentsAs('lab', [
+            Submit::class
+        ]);
     }
 
     /**
