@@ -24,6 +24,7 @@ class Lab
         $this->responseData['fade_out_time'] = config('lab.fade_out_time', '3000');
         $this->responseData['redirect_delay'] = config('lab.redirect_delay', 1500);
         $this->responseData['scroll_to_top'] = false;
+        $this->responseData['as_ajax'] = false;
         $this->responseData['top_validation_error'] = false;
         $this->responseData['individual_validation_error'] = true;
         $this->responseData['submit_button_label'] = null;
@@ -162,6 +163,12 @@ class Lab
     public function disableFadeOut(): static
     {
         $this->responseData['fade_out'] = false;
+        return $this;
+    }
+
+    public function asAjax(): static
+    {
+        $this->responseData['as_ajax'] = true;
         return $this;
     }
 

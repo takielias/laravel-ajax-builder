@@ -33,7 +33,7 @@ window.ajaxRequest = function (url, data = {}, successCallback, errorCallback, c
                 successCallback(response);
             }
             console.log(response);
-            if (response.alert) {
+            if (response.alert && !response.as_ajax) {
                 $("#alert").html(response.alert);
                 if (response.fade_out) {
                     let timeOut = parseInt(response.fade_out_time ?? 3000, 10);
