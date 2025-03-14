@@ -166,8 +166,22 @@ window.resetForm = function () {
 
 $(document).delegate(".ajax-submit-button", "click", function (event) {
     event.preventDefault();
-    $("#alert").html("");
     const btn = $(this);
+
+    // Check if confirmation is required
+    const confirmAttr = btn.attr('data-confirm');
+
+    // Default message if attribute is present but has value "1"
+    let confirmMessage = confirmAttr;
+    if (confirmAttr === "1") {
+        confirmMessage = "Are you sure you want to proceed?";
+    }
+
+    if (confirmMessage && !window.confirm(confirmMessage)) {
+        return false; // Stop if user cancels
+    }
+
+    $("#alert").html("");
 
     $('[tinymce-id]').each(function () {
         const tmcIdValue = $(this).attr('tinymce-id');
