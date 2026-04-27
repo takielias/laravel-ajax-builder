@@ -2,6 +2,7 @@
 
 namespace Takielias\Lab;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\View\View;
 use Takielias\Lab\Enums\AlertType;
@@ -107,7 +108,7 @@ class Lab
         return $this->message;
     }
 
-    public function setView($view): static
+    public function setView(?View $view): static
     {
         if ($view) {
             $this->view = $view;
@@ -135,7 +136,7 @@ class Lab
         return $this;
     }
 
-    public function setAlert($alert): static
+    public function setAlert(?View $alert): static
     {
         if ($alert) {
             $this->alert = $alert;
@@ -151,14 +152,14 @@ class Lab
         return $this;
     }
 
-    public function setAlertView($type): static
+    public function setAlertView(string $type): static
     {
         $this->setViewPath('lab-alert::'.$type);
 
         return $this;
     }
 
-    public function setIconClass($iconClass): static
+    public function setIconClass(?string $iconClass): static
     {
         if ($iconClass) {
             $this->iconClass = $iconClass;
@@ -168,12 +169,12 @@ class Lab
         return $this;
     }
 
-    public function getIcon()
+    public function getIcon(): mixed
     {
         return $this->iconClass;
     }
 
-    public function setRedirect($redirect): static
+    public function setRedirect(?string $redirect): static
     {
         if ($redirect) {
             $this->responseData['redirect'] = $redirect;
@@ -217,7 +218,7 @@ class Lab
         return $this;
     }
 
-    public function setInfo($message = 'Info !!!'): static
+    public function setInfo(string $message = 'Info !!!'): static
     {
         $icon = 'ti ti-info-circle';
         $this->setIconClass($icon);
@@ -227,7 +228,7 @@ class Lab
         return $this;
     }
 
-    public function setSuccess($message = 'Success !!!'): static
+    public function setSuccess(string $message = 'Success !!!'): static
     {
         $icon = 'ti ti-check';
         $this->setIconClass($icon);
@@ -237,7 +238,7 @@ class Lab
         return $this;
     }
 
-    public function setWarning($message = 'Warning !!!'): static
+    public function setWarning(string $message = 'Warning !!!'): static
     {
         $icon = 'ti ti-exclamation-circle';
         $this->setIconClass($icon);
@@ -247,7 +248,7 @@ class Lab
         return $this;
     }
 
-    public function setDanger($message = 'Danger !!!'): static
+    public function setDanger(string $message = 'Danger !!!'): static
     {
         $icon = 'ti ti-alert-triangle';
         $this->setIconClass($icon);
@@ -257,7 +258,7 @@ class Lab
         return $this;
     }
 
-    public function setValidationAlertView($validator): static
+    public function setValidationAlertView(Validator $validator): static
     {
         $icon = 'ti ti-alert-triangle';
         $this->setIconClass($icon);
@@ -267,7 +268,7 @@ class Lab
         return $this;
     }
 
-    public function setValidationError($validator): static
+    public function setValidationError(Validator $validator): static
     {
         $icon = 'ti ti-alert-triangle';
         $this->setIconClass($icon);

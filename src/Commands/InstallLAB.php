@@ -66,7 +66,7 @@ class InstallLAB extends Command
     }
 
     // Helper function to check for the import more reliably
-    protected static function hasImportBeenAdded($filePath, $lineToAdd): bool
+    protected static function hasImportBeenAdded(string $filePath, string $lineToAdd): bool
     {
         $fileContent = file_get_contents($filePath);
 
