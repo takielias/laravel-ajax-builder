@@ -13,8 +13,9 @@ class InstallLAB extends Command
     public function handle(): void
     {
         // Update npm packages
-        if (!file_exists(base_path('package.json'))) {
+        if (! file_exists(base_path('package.json'))) {
             $this->error('package.json not found.');
+
             return;
         }
 
@@ -22,8 +23,9 @@ class InstallLAB extends Command
         $filePath = base_path('resources/js/app.js');
 
         // Check if the file exists
-        if (!file_exists($filePath)) {
+        if (! file_exists($filePath)) {
             $this->error("File does not exist: {$filePath}");
+
             return;
         }
 
@@ -49,7 +51,7 @@ class InstallLAB extends Command
         $lineToAdd = "import '../../vendor/takielias/lab/resources/js/load.js';\n";
 
         // Check if the import has already been added (using a more robust method)
-        if (!self::hasImportBeenAdded($filePath, $lineToAdd)) {
+        if (! self::hasImportBeenAdded($filePath, $lineToAdd)) {
             // Append the line if it does not exist
             file_put_contents($filePath, $lineToAdd, FILE_APPEND);
         }
@@ -60,14 +62,14 @@ class InstallLAB extends Command
      */
     protected static function scaffoldConfig(): void
     {
-        copy(__DIR__ . '../../../config/lab.php', base_path('config/lab.php'));
+        copy(__DIR__.'../../../config/lab.php', base_path('config/lab.php'));
     }
 
     // Helper function to check for the import more reliably
     protected static function hasImportBeenAdded($filePath, $lineToAdd): bool
     {
         $fileContent = file_get_contents($filePath);
+
         return str_contains($fileContent, $lineToAdd);
     }
-
 }

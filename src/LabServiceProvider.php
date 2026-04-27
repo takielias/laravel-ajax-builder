@@ -11,8 +11,6 @@ class LabServiceProvider extends ServiceProvider
 {
     /**
      * Perform post-registration booting of services.
-     *
-     * @return void
      */
     public function boot(): void
     {
@@ -26,9 +24,9 @@ class LabServiceProvider extends ServiceProvider
             $this->bootForConsole();
         }
 
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'lab');
-        $this->loadViewsFrom(__DIR__ . '/../resources/views/alert', 'lab-alert');
-        $this->loadViewsFrom(__DIR__ . '/../resources/views/button', 'lab-button');
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'lab');
+        $this->loadViewsFrom(__DIR__.'/../resources/views/alert', 'lab-alert');
+        $this->loadViewsFrom(__DIR__.'/../resources/views/button', 'lab-button');
 
         // Register a new custom directive called @alert
         Blade::directive('alert', function ($expression) {
@@ -48,29 +46,28 @@ class LabServiceProvider extends ServiceProvider
             if (isset($expression) && trim($expression) !== '') {
                 $parts = explode(',', $expression);
                 $title = trim(array_shift($parts) ?: $defaultTitle); // Get first item, trim, default to $defaultTitle
-                $class = trim(implode(' ', $parts) ?: '') ? trim(implode(' ', $parts)) . ' ' . $defaultClass : $defaultClass; // Combine remaining, trim, append default class (if not empty)
+                $class = trim(implode(' ', $parts) ?: '') ? trim(implode(' ', $parts)).' '.$defaultClass : $defaultClass; // Combine remaining, trim, append default class (if not empty)
             }
+
             // Consider using Blade components or view composition for reusable button rendering
-            return '<button type="submit" class="' . $class . '">' . $title . '</button>';
+            return '<button type="submit" class="'.$class.'">'.$title.'</button>';
         });
 
         $this->loadViewComponentsAs('lab', [
-            Submit::class
+            Submit::class,
         ]);
     }
 
     /**
      * Register any package services.
-     *
-     * @return void
      */
     public function register(): void
     {
-        $this->mergeConfigFrom(__DIR__ . '/../config/lab.php', 'lab');
+        $this->mergeConfigFrom(__DIR__.'/../config/lab.php', 'lab');
 
         // Register the service the package provides.
         $this->app->singleton('lab', function ($app) {
-            return new Lab();
+            return new Lab;
         });
     }
 
@@ -86,14 +83,12 @@ class LabServiceProvider extends ServiceProvider
 
     /**
      * Console-specific booting.
-     *
-     * @return void
      */
     protected function bootForConsole(): void
     {
         // Publishing the configuration file.
         $this->publishes([
-            __DIR__ . '/../config/lab.php' => config_path('lab.php'),
+            __DIR__.'/../config/lab.php' => config_path('lab.php'),
         ], 'lab.config');
 
         // Publishing the views.
@@ -113,7 +108,7 @@ class LabServiceProvider extends ServiceProvider
 
         // Registering package commands.
         $this->commands([
-            InstallLAB::class
+            InstallLAB::class,
         ]);
     }
 }
