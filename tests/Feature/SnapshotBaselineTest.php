@@ -3,6 +3,9 @@
 namespace Takielias\Lab\Tests\Feature;
 
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\ServiceProvider;
+use Takielias\Lab\Commands\InstallLAB;
+use Takielias\Lab\Lab;
 use Takielias\Lab\Tests\TestCase;
 
 /**
@@ -12,6 +15,7 @@ use Takielias\Lab\Tests\TestCase;
 class SnapshotBaselineTest extends TestCase
 {
     private string $baselineDir;
+
     private string $packageRoot;
 
     protected function setUp(): void
@@ -47,7 +51,7 @@ class SnapshotBaselineTest extends TestCase
 
     public function test_lab_install_command_signature_unchanged(): void
     {
-        $command = $this->app->make(\Takielias\Lab\Commands\InstallLAB::class);
+        $command = $this->app->make(InstallLAB::class);
         $this->assertSnapshot('lab-install-signature.txt', $command->getName()."\n");
     }
 
@@ -61,7 +65,7 @@ class SnapshotBaselineTest extends TestCase
 
     public function test_lab_class_public_api_unchanged(): void
     {
-        $reflection = new \ReflectionClass(\Takielias\Lab\Lab::class);
+        $reflection = new \ReflectionClass(Lab::class);
         $methods = array_map(fn ($m) => $m->getName(), $reflection->getMethods(\ReflectionMethod::IS_PUBLIC));
         sort($methods);
         $this->assertSnapshot('lab-class-methods.txt', implode("\n", $methods)."\n");
@@ -69,7 +73,7 @@ class SnapshotBaselineTest extends TestCase
 
     public function test_publish_tags_unchanged(): void
     {
-        $tags = \Illuminate\Support\ServiceProvider::publishableGroups();
+        $tags = ServiceProvider::publishableGroups();
         sort($tags);
         $this->assertSnapshot('publish-tags.txt', implode("\n", $tags)."\n");
     }
