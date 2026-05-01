@@ -2,30 +2,21 @@
 
 namespace Takielias\Lab\View\Components;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 class Submit extends Component
 {
-    public string $title;
-    public ?string $askConfirmation;
-
     /**
-     * Create a new component instance.
-     *
-     * @param string $title The button text
-     * @param string|null $askConfirmation Optional confirmation message
+     * @param  string  $title  The button text
+     * @param  string|null  $askConfirmation  Optional confirmation message
      */
     public function __construct(
-        string $title = 'Submit',
-        string $askConfirmation = null
-    )
-    {
-        $this->title = $title;
-        $this->askConfirmation = $askConfirmation;
+        public string $title = 'Submit',
+        public ?string $askConfirmation = null,
+    ) {}
 
-    }
-
-    public function render()
+    public function render(): View
     {
         return view('lab::components.submit');
     }

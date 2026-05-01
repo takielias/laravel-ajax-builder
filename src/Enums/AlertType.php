@@ -16,13 +16,12 @@ enum AlertType: string
         foreach (self::cases() as $case) {
             $result[$case->value] = $case->getDisplayName();
         }
+
         return $result;
     }
 
     /**
      * Get the display-friendly name for the enum case.
-     *
-     * @return string
      */
     public function getDisplayName(): string
     {
