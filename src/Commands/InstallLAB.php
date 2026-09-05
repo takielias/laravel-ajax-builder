@@ -1,6 +1,6 @@
 <?php
 
-namespace Takielias\Lab\Commands;
+namespace TakiElias\Lab\Commands;
 
 use Illuminate\Console\Command;
 

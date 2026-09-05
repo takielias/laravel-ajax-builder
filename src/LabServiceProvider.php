@@ -1,11 +1,11 @@
 <?php
 
-namespace Takielias\Lab;
+namespace TakiElias\Lab;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
-use Takielias\Lab\Commands\InstallLAB;
-use Takielias\Lab\View\Components\Submit;
+use TakiElias\Lab\Commands\InstallLAB;
+use TakiElias\Lab\View\Components\Submit;
 
 class LabServiceProvider extends ServiceProvider
 {

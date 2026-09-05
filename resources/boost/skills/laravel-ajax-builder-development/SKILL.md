@@ -191,7 +191,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Takielias\Lab\Facades\Lab;
+use TakiElias\Lab\Facades\Lab;
 
 class SaveProductRequest extends FormRequest
 {

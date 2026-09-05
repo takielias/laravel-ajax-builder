@@ -1,9 +1,9 @@
 <?php
 
-namespace Takielias\Lab\Tests;
+namespace TakiElias\Lab\Tests;
 
 use Orchestra\Testbench\TestCase as BaseTestCase;
-use Takielias\Lab\LabServiceProvider;
+use TakiElias\Lab\LabServiceProvider;
 
 abstract class TestCase extends BaseTestCase
 {

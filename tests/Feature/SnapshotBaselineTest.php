@@ -1,12 +1,12 @@
 <?php
 
-namespace Takielias\Lab\Tests\Feature;
+namespace TakiElias\Lab\Tests\Feature;
 
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
-use Takielias\Lab\Commands\InstallLAB;
-use Takielias\Lab\Lab;
-use Takielias\Lab\Tests\TestCase;
+use TakiElias\Lab\Commands\InstallLAB;
+use TakiElias\Lab\Lab;
+use TakiElias\Lab\Tests\TestCase;
 
 /**
  * Regression guard. Locks current state of views, view components,
@@ -57,7 +57,7 @@ class SnapshotBaselineTest extends TestCase
 
     public function test_facade_class_unchanged(): void
     {
-        $reflection = new \ReflectionClass(\Takielias\Lab\Facades\Lab::class);
+        $reflection = new \ReflectionClass(\TakiElias\Lab\Facades\Lab::class);
         $methods = array_map(fn ($m) => $m->getName(), $reflection->getMethods(\ReflectionMethod::IS_PUBLIC));
         sort($methods);
         $this->assertSnapshot('facade-methods.txt', implode("\n", $methods)."\n");

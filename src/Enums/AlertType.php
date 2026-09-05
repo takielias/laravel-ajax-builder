@@ -1,6 +1,6 @@
 <?php
 
-namespace Takielias\Lab\Enums;
+namespace TakiElias\Lab\Enums;
 
 enum AlertType: string
 {
