@@ -26,21 +26,24 @@
     },
     "autoload": {
         "psr-4": {
-            "Takielias\\Lab\\": "src/"
-        }
+            "TakiElias\\Lab\\": "src/"
+        },
+        "files": [
+            "src/aliases.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
-            "Takielias\\Lab\\Tests\\": "tests"
+            "TakiElias\\Lab\\Tests\\": "tests"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Takielias\\Lab\\LabServiceProvider"
+                "TakiElias\\Lab\\LabServiceProvider"
             ],
             "aliases": {
-                "Lab": "Takielias\\Lab\\Facades\\Lab"
+                "Lab": "TakiElias\\Lab\\Facades\\Lab"
             }
         }
     }

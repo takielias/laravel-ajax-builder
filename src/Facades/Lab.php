@@ -1,6 +1,6 @@
 <?php
 
-namespace Takielias\Lab\Facades;
+namespace TakiElias\Lab\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

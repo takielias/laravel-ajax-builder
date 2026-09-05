@@ -1,6 +1,6 @@
 <?php
 
-namespace Takielias\Lab\View\Components;
+namespace TakiElias\Lab\View\Components;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;

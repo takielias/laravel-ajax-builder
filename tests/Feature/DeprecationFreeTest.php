@@ -1,9 +1,9 @@
 <?php
 
-namespace Takielias\Lab\Tests\Feature;
+namespace TakiElias\Lab\Tests\Feature;
 
-use Takielias\Lab\Lab;
-use Takielias\Lab\Tests\TestCase;
+use TakiElias\Lab\Lab;
+use TakiElias\Lab\Tests\TestCase;
 
 /**
  * Smoke a representative slice of the Lab API under a custom error

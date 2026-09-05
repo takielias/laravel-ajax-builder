@@ -1,8 +1,8 @@
 <?php
 
-namespace Takielias\Lab\Tests\Feature;
+namespace TakiElias\Lab\Tests\Feature;
 
-use Takielias\Lab\Tests\TestCase;
+use TakiElias\Lab\Tests\TestCase;
 
 class ReadmeRequirementsTest extends TestCase
 {

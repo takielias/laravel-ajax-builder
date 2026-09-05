@@ -1,11 +1,11 @@
 <?php
 
-namespace Takielias\Lab;
+namespace TakiElias\Lab;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\View\View;
-use Takielias\Lab\Enums\AlertType;
+use TakiElias\Lab\Enums\AlertType;
 
 class Lab
 {
